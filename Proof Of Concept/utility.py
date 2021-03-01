@@ -41,7 +41,7 @@ def percussion():
 print(percussion())
 
 def note_sequence():
-    notes = [0,8, 2,10, 4,12, 5,13, 7,15] #[0,1,2,3,4,5,6,7]
+    notes = [0,7, 2,9, 4,11, 5,12, 7,14] #[0,1,2,3,4,5,6,7]
     notes_in_sequence = []
     for i in range(randrange(4, 9)):
         notes_in_sequence.append(random.choice(notes))

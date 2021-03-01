@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+from random import randrange
+import random
+from FoxDot import *
+#from utility import *
+
+
+class Instrument:
+    def __init__(self):
+        self.instrument = randomInstrument()
+        self.volume = volume
+        self.pan = pan
+        self.sustain = sustain
+        self.duration = duration
+        self.startTime = startTime
+        self.stopTime = stopTime
+        self.isSolo = isSolo
+        
+    def randomInstrument():
+        instrumentList = ['loop', 'stretch', 'audioin', 'noise', 'dab', 
+                      'varsaw', 'lazer', 'growl', 'bass', 'dirt', 'crunch', 'rave', 'scatter',
+                      'charm', 'bell', 'gong', 'soprano', 'dub', 'viola', 'scratch', 'klank',
+                      'feel', 'glass', 'soft', 'quin', 'pluck', 'spark', 'blip', 'ripple', 'creep', 
+                      'orient', 'zap', 'marimba', 'fuzz', 'bug', 'pulse', 'saw', 'snick', 'twang',
+                      'karp', 'arpy', 'nylon', 'donk', 'squish', 'swell', 'razz', 'sitar', 'star',
+                      'jbass', 'sawbass', 'prophet', 'pasha', 'ambi', 'space', 'keys', 
+                      'dbass', 'sinepad']
+        return random.choice(instrumentList)
+        
+
+ins1 = Instrument()
+print(ins1.instrument)

@@ -45,8 +45,8 @@ def player():
     #p1 >> prophet(var.chords, dur=durations2).stop(8)
     
     #WHY does this error make the UI work?!!!!
-    Clock.future(4, lambda: p4 >> prophet(var.chords, amp=2.5, dur=durations2)).stop(16)
-    Clock.future(8, lambda: p4 >> play(percussion(), amp=2).stop(16)).stop(16)
+    Clock.future(4, lambda: p4 >> prophet(var.chords, amp=2.5, dur=durations2).stop(16))
+    Clock.future(8, lambda: p5 >> play(percussion(), amp=2).stop(16)).stop(16)
     
 
     Go()
