@@ -6,29 +6,40 @@ from FoxDot import *
 
 
 class Instrument:
-    def __init__(self):
-        self.typeOf = self.randomInstrument()
+    def __init__(self, instrument):
+        #self.instrumentType = instrumentType(x)
+        self.typeOf = self.randomInstrument(instrument)
         self.notes = self.randomNoteSeq()
         self.beats = self.noteBeats(self.notes)
         self.volume = self.randomVolume()
         self.pan = self.randomPan()
         self.sustain = self.randomSustain()
-        # self.duration
+        self.duration = self.note_duration(self.beats)
         # self.startTime
         # self.stopTime
         # self.isSolo
         
-    def randomInstrument(self):
-        instrumentList = ['loop', 'stretch', 'audioin', 'noise', 'dab', 
-                      'varsaw', 'lazer', 'growl', 'bass', 'dirt', 'crunch', 'rave', 'scatter',
-                      'charm', 'bell', 'gong', 'soprano', 'dub', 'viola', 'scratch', 'klank',
-                      'feel', 'glass', 'soft', 'quin', 'pluck', 'spark', 'blip', 'ripple', 'creep', 
-                      'orient', 'zap', 'marimba', 'fuzz', 'bug', 'pulse', 'saw', 'snick', 'twang',
-                      'karp', 'arpy', 'nylon', 'donk', 'squish', 'swell', 'razz', 'sitar', 'star',
-                      'jbass', 'sawbass', 'prophet', 'pasha', 'ambi', 'space', 'keys', 
-                      'dbass', 'sinepad']
-        return random.choice(instrumentList)
-    
+    def randomInstrument(self, type):
+        instrumentList = [ 
+                      'varsaw', 'lazer', 'rave', 'scatter',
+                      'charm', 'bell', 'gong', 'viola',  
+                      'soft', 'quin', 'pluck', 'spark', 'blip',  'creep', 
+                      'orient', 'zap', 'marimba', 'pulse', 'saw',  
+                      'karp', 'arpy', 'nylon',   'swell', 'razz', 'sitar', 'star',
+                      'pasha', 'space', 'keys', 'sinepad', 'piano'
+                      ]
+        bassList = ['noise', 'dab', 'bass', 'dirt',   'dub', 'scratch', 'ripple',
+                    'fuzz', 'donk', 'squish', 'jbass', 'sawbass', 'dbass']    
+        ambienceList = ['snick', 'crunch', 'space', 'growl', 'glass']      
+        sustainedList = ['scatter', 'soprano', 'klank', 'feel', 'glass', 'prophet', 'bug', 'ambi']
+        if type == 'treble':
+            return random.choice(instrumentList)
+        elif type == 'bass':
+            return random.choice(bassList)
+        elif type == 'ambience':
+            return random.choice(ambienceList)
+        elif type == 'sustain':
+            return random.choice(sustainedList)
 
     
     def randomVolume(self):
@@ -86,9 +97,28 @@ class Instrument:
         return randint(-10, 20) / 10
     
     
+        #defines the length of the notes as list. Make the values weighted
+    def note_duration(self, beats):
+        beats_length = len(beats)               #make the lists same length
+       
+        #durations = [0.25, 0.5, 0.75, 1, 1.5, 2]
+        
+        #adding weights gives the melody a more natural feel & rhythm
+        # rather than use values between 0 - 1, used 0-100 for integer purposes
+        durations = [0.25] * 25 + [0.5] * 25 + [0.75] * 10 +  [1] * 20 + [1.5] * 10 + [2] * 10       
+        
+        note_lengths = []
+        
+        while len(beats) != len(note_lengths):
+        #while len(note_lengths) != 2:
+            note_lengths.append(random.choice(durations))
+            #note_lengths.append(weighted_choice(durations, weights))
+        
+        return note_lengths
+    
         
 
-ins1 = Instrument()
+ins1 = Instrument('sustain')
 
 print('Instrument is: ' + ins1.typeOf)
 print('Volume: ' + str(ins1.volume))
@@ -96,3 +126,4 @@ print('Pan values: ' + str(ins1.pan))
 print('Sustain: ' + str(ins1.sustain))
 print('Notes: ' + str(ins1.notes))
 print('Beats per note: ' + str(ins1.beats))
+print('Durations: ' + str(ins1.duration))
