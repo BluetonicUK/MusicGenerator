@@ -152,6 +152,13 @@ def note_duration(beats):
         #note_lengths.append(weighted_choice(durations, weights))
     
     return note_lengths
+
+
+
+
+def recordWithSC():
+    pass
+    
     
 
 

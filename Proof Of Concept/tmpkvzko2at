@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Mar 19 20:22:06 2021
+
+@author: johnn
+"""
+
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtGui import * 
+import sys
+
+class PyQtUI(QMainWindow):
+    def __init__(self):
+        super(PyQtUI, self).__init__()
+        self.setGeometry(100, 100, 400, 300) #x,y,w,h
+        self.setFixedSize(600, 300)
+        self.setWindowTitle("Music Generator")
+        self.initUI()
+        
+    def initUI(self):
+        self.play = QtWidgets.QPushButton(self)
+        self.play.setText("\u25B6")
+        self.play.setFont(QFont('Arial', 12))
+        self.play.move(50, 50)
+        self.play.clicked.connect(self.clicked)
+        
+        self.stop = QtWidgets.QPushButton(self)
+        self.stop.setText("\u23F9")
+        self.stop.setFont(QFont('Arial', 10))
+        self.stop.move(200, 50)
+        self.stop.clicked.connect(self.clicked)
+        
+    def clicked(self):
+        self.label.setText("Well done")
+    
+    def displayInstruments(self, instrument1, instrument2):
+        self.ins1 = QtWidgets.QLabel(self)
+        self.ins1.setText("Instrument 1: " + instrument1)
+        self.ins1.move(50, 100)
+        
+        self.ins2 = QtWidgets.QLabel(self)
+        self.ins2.setText("Instrument 2: " + instrument2)
+        self.ins2.move(50, 120)
+        
+        
+    def update(self): 
+        self.label.adjustSize()
+        
+        
+
+def clicked():
+    print("Clicked")
+
+def window():
+    app = QApplication(sys.argv)
+    win = PyQtUI()
+    win.displayInstruments("bongo", "blh")
+    win.show()
+    
+    sys.exit(app.exec_())
+    
+    
+window()

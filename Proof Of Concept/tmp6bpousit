@@ -4,22 +4,20 @@ import random
 from FoxDot import *
 from utility import *
 from Instrument import *
-#from PyQtUI import *
+#import qpm
+from pythonosc import osc_server
+from pythonosc import dispatcher
 from pythonosc import udp_client
-import asyncio
+# import OSC
 
+# client = OSC.OSCClient()
+# client.connect( ( '127.0.0.1', 57110  ) )
 
+client = udp_client.SimpleUDPClient('127.0.0.1', 57110)
 
-client = udp_client.SimpleUDPClient('172.0.0.1', 57110)
-
-#Server.recHeaderFormat = "WAV"
-# Server.prepareForRecord("C:/Users/johnn/Documents/SuperCollider/Recordings/control001.wav", 2)
-#time.sleep(1)
-
-# client.send_message("/s_new", Server.record())
-# time.sleep(5)
-# client.send_message("/s_new", Server.stopRecording())
-
+# dispatcher = dispatcher.Dispatcher()
+# server = osc_server.AsyncIOOSCUDPServer(("127.0.0.1", 57110), dispatcher, loop)
+#print(server)
 
 
 def tempo():
@@ -88,21 +86,14 @@ def player():
     #Clock.future(8, lambda: p5 >> play(percussion(), amp=2).stop(16)).stop(16) #work around hack. 
     
 
-    #client.send_message("/s_new", "default", s.record())
-
-    #Server.record()    
+    
 
     Go()
     
-    # asyncio.run(test())
-    
-
-    
     #client.send_message("/s_new", "default", s.nextNodeID, 1, 1)
-    
     #client.send(s.record())
     #Server.record()
-    #client.send_message(57110, s.record)
+    client.send_message(57110, s.record)
     #Server.record()
 
 
