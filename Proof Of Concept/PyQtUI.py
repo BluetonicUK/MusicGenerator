@@ -6,19 +6,21 @@ Created on Fri Mar 19 20:22:06 2021
 """
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
 from PyQt5.QtGui import * 
 import sys
 from utility import *
 from FoxDot1 import *
 from FoxDot import *
 from pythonosc import udp_client
+from glob import glob
+from Analysis import Analysis
 
 class PyQtUI(QMainWindow):
     def __init__(self):
         super(PyQtUI, self).__init__()
-        self.setGeometry(100, 100, 400, 300) #x,y,w,h
-        self.setFixedSize(700, 300)
+        #self.setGeometry(100, 100, 700, 300) #x,y,w,h
+        self.setFixedSize(400, 500)
         self.setWindowTitle("Music Generator")
         self.initUI()
         #self.window()
@@ -33,23 +35,38 @@ class PyQtUI(QMainWindow):
         
         self.stop = QtWidgets.QPushButton(self)
         self.stop.setText("Stop")
-        self.stop.move(170, 50)
+        self.stop.move(50, 90)
         self.stop.clicked.connect(self.clickStop)
         
         self.record = QtWidgets.QPushButton(self)
         self.record.setText("Record")
-        self.record.move(290, 50)
+        self.record.move(50, 130)
         self.record.clicked.connect(self.startRecording)
         
         self.stopRecord = QtWidgets.QPushButton(self)
         self.stopRecord.setText("Stop Record")
-        self.stopRecord.move(410, 50)
+        self.stopRecord.move(50, 170)
         self.stopRecord.clicked.connect(self.stopRecording)
               
-        self.analyse = QtWidgets.QPushButton(self)
-        self.analyse.setText("Analyse")
-        self.analyse.move(530, 50)
-        self.analyse.setEnabled(False)
+        self.analyseWave = QtWidgets.QPushButton(self)
+        self.analyseWave.setText("Waveplot")
+        self.analyseWave.move(50, 210)
+        self.analyseWave.setEnabled(False)
+        self.analyseWave.clicked.connect(self.displayWaveplot)
+        
+        self.analyseHandP = QtWidgets.QPushButton(self)
+        self.analyseHandP.setText("Harmonics")
+        self.analyseHandP.move(50, 250)
+        self.analyseHandP.setEnabled(False)
+        self.analyseHandP.clicked.connect(self.displayHarmonicsPercussion)
+        
+        self.analyseSpectogram = QtWidgets.QPushButton(self)
+        self.analyseSpectogram.setText("Spectogram")
+        self.analyseSpectogram.move(50, 290)
+        self.analyseSpectogram.setEnabled(False)
+        self.analyseSpectogram.clicked.connect(self.displaySpectogram)
+        
+        
         
     def clickPlay(self):
         self.play.setEnabled(False)
@@ -66,8 +83,41 @@ class PyQtUI(QMainWindow):
         Server.record()
         
     def stopRecording(self):
-        self.analyse.setEnabled(True)
+        self.analyseWave.setEnabled(True)
+        self.analyseHandP.setEnabled(True)
+        self.analyseSpectogram.setEnabled(True)
         Server.stopRecording()
+    
+    def displayWaveplot(self):
+        directory = r'C:\Users\johnn\anaconda3\Lib\site-packages\FoxDot\rec'
+        audio_files = glob(directory + '/*.aiff')
+        analysis = Analysis(audio_files[len(audio_files) - 1])
+        
+        image = analysis.displayWaveGraph()
+        image.show()
+        
+        # label = QLabel(self)
+
+        # pixmap = QPixmap(image)
+        
+        # label.setPixmap(pixmap)     
+        # self.setCentralWidget(label)
+        # self.label.move(500, 200)
+        
+    def displayHarmonicsPercussion(self):
+        directory = r'C:\Users\johnn\anaconda3\Lib\site-packages\FoxDot\rec'
+        audio_files = glob(directory + '/*.aiff')
+        analysis = Analysis(audio_files[len(audio_files) - 1])       
+        image = analysis.displayHarmonicsPercussive()
+        image.show()
+    
+    def displaySpectogram(self):
+        directory = r'C:\Users\johnn\anaconda3\Lib\site-packages\FoxDot\rec'
+        audio_files = glob(directory + '/*.aiff')
+        analysis = Analysis(audio_files[len(audio_files) - 1])       
+        image = analysis.displaySTFT()
+        image.show()
+        
     
     def displayInstruments(self, instrument1, instrument2):
         self.ins1 = QtWidgets.QLabel(self)
