@@ -3,7 +3,7 @@ from random import randrange
 import random
 
 
-class Percussion():
+class Drums():
     def __init__(self):
         self.drumBeat = self.percussion()
         
@@ -22,3 +22,5 @@ class Percussion():
             
         return drums
 
+drum = Drums()
+print(drum.drumBeat)

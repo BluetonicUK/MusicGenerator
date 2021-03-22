@@ -29,10 +29,12 @@ class Instrument:
                       'soft', 'quin', 'pluck', 'spark', 'blip',  'creep', 
                       'orient', 'zap', 'marimba', 'pulse', 'saw',  
                       'karp', 'arpy', 'nylon',   'swell', 'razz', 'sitar', 'star',
-                      'pasha', 'space', 'keys', 'sinepad', 'piano'
+                      'pasha', 'space', 'keys', 'sinepad'
                       ]
-        bassList = ['noise', 'dab', 'bass', 'dirt',   'dub', 'scratch', 'ripple',
-                    'fuzz', 'donk', 'squish', 'jbass', 'sawbass', 'dbass']    
+        instrumentList = [ 'pluck', 'karp' ]
+        # bassList = ['noise', 'dab', 'bass', 'dirt',   'dub', 'scratch', 'ripple',
+        #             'fuzz', 'donk', 'squish', 'jbass', 'sawbass', 'dbass'] 
+        bassList = ['sawbass']  
         ambienceList = ['snick', 'crunch', 'space', 'growl', 'glass']      
         sustainedList = ['scatter', 'soprano', 'klank', 'feel', 'glass', 'prophet', 'bug', 'ambi']
         if type == 'treble':
@@ -51,7 +53,7 @@ class Instrument:
         return volume
     
     def randomNoteSeq(self):
-        notes = [0,8, 2,10, 4,12, 5,13, 7,15] #[0,1,2,3,4,5,6,7]
+        notes = [0,7, 2,9, 4,11, 5,12, 7,14] #[0,1,2,3,4,5,6,7]
         notes_in_sequence = []
         for i in range(randrange(4, 9)):
             notes_in_sequence.append(random.choice(notes))
@@ -127,10 +129,8 @@ class Instrument:
     def counteMelody(self, note_sequence):
         
         #allows for half notes or double notes (quavers or dotted crotchets)
-        #LINE BUGGED> FIX THIS
         #counter_mel_size =  random.randint(len(note_sequence) - 2, len(note_sequence) + 2)
         counter_mel_size =  len(note_sequence)
-        print(counter_mel_size)
         counter_mel = []
         counterNote = random.choice([2,4]) #values for the 3rd or 5th note of the chort. try this with negative values too in future
         
@@ -152,16 +152,13 @@ class Instrument:
     
     def counteMelodyBeats(self, counter_melody, beats_per_note):
         counter_beats = []
-        print(sum(beats_per_note)) 
+
         #counter_beats = note_beats(counter_melody) 
         #ERRORS WHEN WE HAVE 4 NOTES and 2 COUNTER NOTES - CAN NEVER GET TO EQUAL NUMBER PROBABLY OTHER SHIT TOO           
-        while sum(beats_per_note) != sum(counter_beats):
-            
+        while sum(beats_per_note) != sum(counter_beats):          
             counter_beats = []
-            print("BOO")
             counter_beats = self.noteBeats(counter_melody)
-            
-            
+                      
         return counter_beats
     
         

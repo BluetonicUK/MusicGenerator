@@ -1,4 +1,4 @@
-Quarks.install("FoxDot")
+//Quarks.install("FoxDot")
 
 FoxDot.start
 
