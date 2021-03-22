@@ -5,83 +5,58 @@ Created on Mon Mar 22 12:27:18 2021
 @author: johnn
 """
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QFileDialog, QGridLayout
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QFileDialog, QGridLayout
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import QCursor
+from PyQt5.QtCore import pyqtSlot
 
 from FoxDot1 import *
 from FoxDot import *
 
 
-
-
-
-
-class Testing(QMainWindow):
-    
-    
-    app = QApplication(sys.argv)
-    window = QWidget()
-    window.setWindowTitle("Music Generator")
-    window.setFixedSize(500, 600)
-    window.setStyleSheet("background: #161219; ")
-    
-    
-    grid = QGridLayout()
-    
+class CostumWindow(QWidget):
     def __init__(self):
-        super(Testing, self).__init__()
-        self.window = QWidget()
-        self.window.setWindowTitle("Music Generator")
-        self.window.setFixedSize(500, 600)
-        self.window.setStyleSheet("background: #161219; ")
-        
-        
-        
-        
-        self.display()
-        
-        
+        # Inherit the constructor of QWidget
+        super().__init__()
 
+        # Initialices the UI
+        self.initUI()
+        self.set_layout()
 
-    def clickPlay(self):
-        player()
-    
-    def clickStop(self):
-        Clock.clear()
-    
-    def startRecording(self):
-        Server.record()
+    def initUI(self):
+        # Costumize the app
+        self.setWindowTitle("Music Generator")
+        self.setFixedSize(500, 600)
+        self.setStyleSheet("background: #161219; ")
 
-    
-    
-    
-    def display(self):
-        
-        self.grid = QGridLayout()
-        #display logo
+        # Initialize the logo
         image = QPixmap("logo/logo.png")
-        logo = QLabel()
-        logo.setPixmap(image)
-        logo.setAlignment(QtCore.Qt.AlignTop)
-        logo.setStyleSheet("margin-left: 135px;")
-        
-    
-        self.playButton = createButton("Play")
-        self.stopButton = createButton("Stop")
-        self.recordButton = createButton("Record")
-        self.stopRecordButton = createButton("Stop Recording")
-        self.wavePlotButton = createButton("WavePlot")
-        self.spectogramButton = createButton("Spectogram")
-        self.harmonicsButton = createButton("Harmonics and Percussive")
-        
+        self.logo = QLabel()
+        self.logo.setPixmap(image)
+        self.logo.setAlignment(QtCore.Qt.AlignTop)
+        self.logo.setStyleSheet("margin-left: 135px;")
+
+        # Initialize the buttons
+        self.playButton = self.createButton("Play")
+        self.stopButton = self.createButton("Stop")
+        self.recordButton = self.createButton("Record")
+        self.stopRecordButton = self.createButton("Stop Recording")
+        self.wavePlotButton = self.createButton("WavePlot")
+        self.spectogramButton = self.createButton("Spectogram")
+        self.harmonicsButton = self.createButton("Harmonics and Percussive")
+
+        # Connect buttons to their function
         self.playButton.clicked.connect(self.clickPlay)
         self.stopButton.clicked.connect(self.clickStop)
-        #playButton.setEnabled(False)
-                             
-    
-        self.grid.addWidget(logo, 0, 0)
+        # self.playButton.setEnabled(False)
+
+    def set_layout(self):
+        # Set layout
+        self.grid = QGridLayout()
+
+        self.grid.addWidget(self.logo, 0, 0)
         self.grid.addWidget(self.playButton, 1, 0)
         self.grid.addWidget(self.stopButton, 2, 0)
         self.grid.addWidget(self.recordButton, 3, 0)
@@ -89,34 +64,41 @@ class Testing(QMainWindow):
         self.grid.addWidget(self.wavePlotButton, 5, 0)
         self.grid.addWidget(self.spectogramButton, 6, 0)
         self.grid.addWidget(self.harmonicsButton, 7, 0)
-        
-        return self.grid
-        
-def createButton(text):
-    button = QPushButton(text)
-    button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-    button.setStyleSheet("border: 2px solid '#9d07de';" +
-                     "border-radius: 15px;" + 
-                     "font-size: 20px;" + 
-                     "color: 'white'; " + 
-                     "padding: 10px 0;}" +                     
-                     "*:hover{background: #9d07de;}"
-                     )
-    return button
+
+        # Use the grid as the app layout
+        self.setLayout(self.grid)
+
+    @staticmethod
+    def createButton(text):
+        button = QPushButton(text)
+        button.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        button.setStyleSheet("border: 2px solid '#9d07de';" +
+                             "border-radius: 15px;" + 
+                             "font-size: 20px;" + 
+                             "color: 'white'; " + 
+                             "padding: 10px 0;}" +                     
+                             "*:hover{background: #9d07de;}"
+                             )
+        return button
+
+    @pyqtSlot()
+    def clickPlay(self):
+        player()
+
+    @pyqtSlot()
+    def clickStop(self):
+        Clock.clear()
+
+    def startRecording(self):
+        Server.record()
 
 
-def show():
-
-    window = Testing()
+def main():
     app = QApplication(sys.argv)
-    grid = window.display()
-    window.setLayout(grid)
+    window = CostumWindow()
     window.show()
-    sys.exit(app.exec())
-    
-show()
+    sys.exit(app.exec_())
 
 
-
-
-                     
+if __name__ == "__main__":
+    main()

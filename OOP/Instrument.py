@@ -15,7 +15,6 @@ class Instrument:
         self.pan = self.randomPan()
         self.sustain = self.randomSustain()
         self.duration = self.noteDuration(self.beats)
-        self.pDuration = (3,8)
         self.startTime = self.randomStartTime()
         
         self.counterMelody = self.counteMelody(self.notes)
@@ -32,13 +31,10 @@ class Instrument:
                       'karp', 'arpy', 'nylon',   'swell', 'razz', 'sitar', 'star',
                       'pasha', 'space', 'keys', 'sinepad', 'piano'
                       ]
-        bassList = ['dab', 'bass', 'dirt',   'dub', 'ripple',
-                    'donk', 'squish', 'jbass', 'sawbass', 'dbass']   
-
-        ambienceList = ['snick', 'crunch', 'space', 'growl', 'glass', 'scratch',]      
-        
+        bassList = ['noise', 'dab', 'bass', 'dirt',   'dub', 'scratch', 'ripple',
+                    'fuzz', 'donk', 'squish', 'jbass', 'sawbass', 'dbass']    
+        ambienceList = ['snick', 'crunch', 'space', 'growl', 'glass']      
         sustainedList = ['scatter', 'soprano', 'klank', 'feel', 'glass', 'prophet', 'bug', 'ambi']
-        
         if type == 'treble':
             return random.choice(instrumentList)
         elif type == 'bass':
@@ -50,12 +46,12 @@ class Instrument:
 
     
     def randomVolume(self):
-        volume = randint(5, 10)
+        volume = randint(10, 30)
         volume /= 10
         return volume
     
     def randomNoteSeq(self):
-        notes = 0,7, 2,9, 4,11, 5,12, 7,14] #[0,1,2,4,5,6] # #[0,1,2,3,4,5,6,7]
+        notes = [0,8, 2,10, 4,12, 5,13, 7,15] #[0,1,2,3,4,5,6,7]
         notes_in_sequence = []
         for i in range(randrange(4, 9)):
             notes_in_sequence.append(random.choice(notes))
@@ -124,7 +120,7 @@ class Instrument:
         return note_lengths
     
     def randomStartTime(self):
-        return random.choice([0,4,8])
+        return random.choice([0,4,8,12])
     
     #return a random note that is part of the root notes chord: 0 -> (2 or 4) etc..C -> E or F
     #for variation the counter melody can have different notes assuming the total number of beats  is the same
@@ -182,4 +178,3 @@ print('Durations: ' + str(ins1.duration))
 print('Start time: ' + str(ins1.startTime))
 print('Counter Melody notes: ' + str(ins1.counterMelody))
 print('Counter melody beats: ' + str(ins1.counterMelodyBeats))
-print('Counter melody beats: ' + str(ins1.pDuration))

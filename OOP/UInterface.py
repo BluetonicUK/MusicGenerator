@@ -12,17 +12,13 @@ from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import QCursor
 from PyQt5.QtCore import pyqtSlot
 
-#from FoxDot1 import *
-from Player import *
+from FoxDot1 import *
 from FoxDot import *
 from Analysis import Analysis
 from glob import glob
 
 
 class UInterface(QWidget):
-    
-    player = Player1()
-    
     def __init__(self):
         # Inherit the constructor of QWidget
         super().__init__()
@@ -30,9 +26,6 @@ class UInterface(QWidget):
         # Initialices the UI
         self.initUI()
         self.set_layout()
-        
-        
-        
 
     def initUI(self):
         # Costumize the app
@@ -69,7 +62,6 @@ class UInterface(QWidget):
         #self.wavePlotButton.setEnabled(False)
         #self.spectogramButton.setEnabled(False)
         #self.harmonicsButton.setEnabled(False)
-        
 
     def set_layout(self):
         # Set layout
@@ -100,18 +92,16 @@ class UInterface(QWidget):
                              )
         return button
 
-    # @pyqtSlot()
+    @pyqtSlot()
     def clickPlay(self):
         self.playButton.setEnabled(False)
         self.recordButton.setEnabled(True)
-        
-        self.player.compileMusic()
-        #print(str(self.player.tempo))
+        player()
 
-    # @pyqtSlot()
+    @pyqtSlot()
     def clickStop(self):
         self.playButton.setEnabled(True)
-        self.player.stop()
+        Clock.clear()
 
     def startRecording(self):
         Server.record()
@@ -123,16 +113,25 @@ class UInterface(QWidget):
         Server.stopRecording()
         
     def displayWaveplot(self):
+        # directory = r'C:\Users\johnn\anaconda3\Lib\site-packages\FoxDot\rec'
+        # audio_files = glob(directory + '/*.aiff')
+        # analysis = Analysis(audio_files[len(audio_files) - 1])
         analysis = self.getAudiofile()
         image = analysis.displayWaveGraph()
         image.show()
     
-    def displayHarmonicsPercussion(self): 
+    def displayHarmonicsPercussion(self):
+        # directory = r'C:\Users\johnn\anaconda3\Lib\site-packages\FoxDot\rec'
+        # audio_files = glob(directory + '/*.aiff')
+        # analysis = Analysis(audio_files[len(audio_files) - 1])  
         analysis = self.getAudiofile()
         image = analysis.displayHarmonicsPercussive()
         image.show()
     
     def displaySpectogram(self):
+        # directory = r'C:\Users\johnn\anaconda3\Lib\site-packages\FoxDot\rec'
+        # audio_files = glob(directory + '/*.aiff')
+        # analysis = Analysis(audio_files[len(audio_files) - 1])
         analysis = self.getAudiofile()
         image = analysis.displaySTFT()
         image.show()
